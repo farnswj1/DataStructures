@@ -36,25 +36,23 @@ AVLTree::~AVLTree(){
 		// Use a queue to traverse the tree
 		queue<AVLNode*> q;
 		q.push(root);
-		int nodeCount = 1;
 
 		// Deletes the nodes row by row until none remain
-		while (nodeCount > 0) {
+		while (q.size() > 0) {
 			AVLNode* node = q.front();
-			q.pop();
-			nodeCount--;
 
-			// Add the left child to the queue if it exists
+			// Adds the left child to the queue if it exists
 			if (node->left != nullptr) {
 				q.push(node->left);
-				nodeCount++;
 			}
 
-			// Add the right child to the queue if it exists
+			// Adds the right child to the queue if it exists
 			if (node->right != nullptr) {
 				q.push(node->right);
-				nodeCount++;
 			}
+
+			// Remove the current node from the queue
+			q.pop();
 
 			// Delete the current node
 			delete node;	
@@ -430,7 +428,7 @@ int AVLTree::size(){
 
 // Computes and returns the number of nodes in the tree. Used for debugging
 int AVLTree::computeSize(){
-	int numNodes = 0; // Tracks the number of nodes in the queue
+	int numNodes = 0; // Tracks the number of nodes counted
 
 	// Count the nodes if the tree is not empty
     if (root != nullptr) {

@@ -93,7 +93,7 @@ int main(int argc, char* argv[]){
 	cout << "Number of valid insertations: " << iCounter << endl;
 	cout << "Number of valid deletions: " << dCounter << endl;
 	cout << "Number of valid retrievals: " << rCounter << endl;
-	cout << "Number of items in the list: " << data->getSize() << endl;
+	cout << "Number of items in the list: " << data->size() << endl;
 	cout << "Time elapsed: " << duration << endl;
 	
 	// Deletes the hash table

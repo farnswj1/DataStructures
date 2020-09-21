@@ -53,10 +53,10 @@ class HashTable {
     }
 
     // Returns the total number of nodes in the hash table
-    int getSize(){
+    int size(){
         int numNodes = 0;
         for (int i = 0; i < tableSize; i++) {
-            numNodes = numNodes + table[i].getSize();
+            numNodes = numNodes + table[i].size();
         }
         return numNodes;
     }

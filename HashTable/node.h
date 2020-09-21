@@ -10,8 +10,8 @@ using namespace std;
 
 // Node class
 template <class T>
-struct Node{
+struct Node {
   T SSN;
   T name;
-  Node<T>*  next;
+  Node<T>* next;
 };
