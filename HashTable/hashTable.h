@@ -36,7 +36,7 @@ class HashTable {
 
     // Searches for the item in the table.
     // If found, it returns true. Otherwise, it returns false
-    Node<V>* find(V item){
+    SLLNode<V>* find(V item){
         return table[stoi(item) % tableSize].search(item);
     }
 
