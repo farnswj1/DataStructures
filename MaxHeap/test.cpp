@@ -1,11 +1,12 @@
 /* Justin Farnsworth
- * December 7, 2017
+ * September 21, 2020
  * test.cpp
  * 
- * This program tests the singly-linked list by reading a file full of input data.
+ * This program tests the max heap by reading a file full of input data.
  * The data may be inserted, deleted, or retrieved.
  * At the end, the number of insertions, deletions, and retrivals will be displayed
  * as well as the amount of time taken to complete.
+ * 
  * 
  * Compile Command:
  * g++ test.cpp -o test
@@ -22,7 +23,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "SLL.h"
+#include "maxHeap.h"
 #include <string>
 #include <time.h>
 #include <ctime>
@@ -38,8 +39,8 @@ int main(int argc, char* argv[]){
 	// Records the current time
 	start = clock();
 
-	// The array size inside the hash table is set to 10007
-	SLL<string>* data = new SLL<string>();
+	// The heap's size is set to 750,000
+	MaxHeap<string>* data = new MaxHeap<string>(750000);
 	
 	int iCounter = 0; // Counts the number of insertions
 	int dCounter = 0; // Counts the number of deletions
@@ -90,10 +91,19 @@ int main(int argc, char* argv[]){
 	cout << "Number of valid insertations: " << iCounter << endl;
 	cout << "Number of valid deletions: " << dCounter << endl;
 	cout << "Number of valid retrievals: " << rCounter << endl;
-	cout << "Number of items in the list: " << data->size() << endl;
+	cout << "Number of items in the heap: " << data->size() << endl;
+	cout << "Heap size: " << data->getHeapSize() << endl;
+	cout << "Max value: " << data->maxNode()->SSN << endl;
 	cout << "Time elapsed: " << duration << endl;
-	
-	// Deletes the hash table
+
+	// Checks if the heap maintains the max heap property
+	if (data->hasMaxProperty()) {
+		cout << "This heap maintains the max heap property." << endl;
+	} else {
+		cout << "This heap does NOT maintain the max heap property." << endl;
+	}
+
+	// Deletes the max heap
 	delete data;
 
 	return 0;

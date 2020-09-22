@@ -7,8 +7,6 @@
  * At the end, the number of insertions, deletions, and retrivals will be displayed
  * as well as the amount of time taken to complete.
  * 
- * This project works best with a Linux. NOT recommended for the Windows!
- * 
  * Compile Command:
  * g++ test.cpp -o test
  * 
@@ -93,7 +91,7 @@ int main(int argc, char* argv[]){
 	cout << "Number of valid insertations: " << iCounter << endl;
 	cout << "Number of valid deletions: " << dCounter << endl;
 	cout << "Number of valid retrievals: " << rCounter << endl;
-	cout << "Number of items in the list: " << data->size() << endl;
+	cout << "Number of items in the hash table: " << data->size() << endl;
 	cout << "Time elapsed: " << duration << endl;
 	
 	// Deletes the hash table

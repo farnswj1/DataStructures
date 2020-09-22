@@ -9,7 +9,7 @@
 #include <string>
 using namespace std;
 
-// DLL Tree class
+// DLL node class
 struct DLLNode{
   string ssn; // Key
   string name;
