@@ -46,7 +46,7 @@ class MinHeap {
 	bool hasMinProperty(int index) {
 		if (isLeaf(index)) { // No children
 			return true;
-		}  else if (hasOneChild(index)) { // Left child
+		} else if (hasOneChild(index)) { // Left child
 			if (heap[index]->SSN > heap[leftChild(index)]->SSN) {
 				return false;
 			} else {
@@ -60,6 +60,13 @@ class MinHeap {
 				return hasMinProperty(rightChild(index)) && hasMinProperty(leftChild(index));
 			}		
 		}
+	}
+
+	// Swaps the two nodes
+	void swap(Node<U>*& node1, Node<U>*& node2) {
+		Node<U>* temp = node1;
+		node1 = node2;
+		node2 = temp;
 	}
 	
 	public:
@@ -77,7 +84,7 @@ class MinHeap {
 	
 	// Destructor
 	~MinHeap() {
-		for (int i = 0; i < numElements; i++){
+		for (int i = 0; i < numElements; i++) {
 			delete heap[i];
 		}
 		delete heap;
@@ -115,20 +122,14 @@ class MinHeap {
 
 			// Bubble-up
 			while (heap[index]->SSN < heap[parentIndex]->SSN) { // Child is less than the parent
-					// Swap their data 
-					U tempSSN = heap[index]->SSN;
-					U tempName = heap[index]->name;
-				
-					heap[index]->SSN = heap[parentIndex]->SSN;
-					heap[index]->name = heap[parentIndex]->name;
-
-					heap[parentIndex]->SSN = tempSSN;
-					heap[parentIndex]->name = tempName;
+				// Swap their data
+				swap(heap[index], heap[parentIndex]);
 				
 				// Move up a level
 				index = parentIndex;
 				parentIndex = parent(index);
 			}
+
 			// Insertion successful
 			numElements++;
 			return true;
@@ -164,14 +165,7 @@ class MinHeap {
 					// Bubble-up
 					while (heap[index]->SSN < heap[parentIndex]->SSN) { // Less than the parent
 						// Swap their data
-						U tempSSN = heap[index]->SSN;
-						U tempName = heap[index]->name;
-					
-						heap[index]->SSN = heap[parentIndex]->SSN;
-						heap[index]->name = heap[parentIndex]->name;
-
-						heap[parentIndex]->SSN = tempSSN;
-						heap[parentIndex]->name = tempName;
+						swap(heap[index], heap[parentIndex]);
 				
 						// Move up a level
 						index = parentIndex;
@@ -188,14 +182,7 @@ class MinHeap {
 						} else if (hasOneChild(index)) { // Node has one child (left child)
 							if (heap[index]->SSN > heap[leftChildIndex]->SSN) {
 								// Swap current node's data with its left child's data
-								U tempSSN = heap[index]->SSN;
-								U tempName = heap[index]->name;
-
-								heap[index]->SSN = heap[leftChildIndex]->SSN;
-								heap[index]->name = heap[leftChildIndex]->name;
-
-								heap[leftChildIndex]->SSN = tempSSN;
-								heap[leftChildIndex]->name = tempName;
+								swap(heap[index], heap[leftChildIndex]);
 							}
 							terminateLoop = true; // No more nodes beyond this point
 						} else { // Has both children
@@ -203,36 +190,23 @@ class MinHeap {
 							U rightSSN = heap[rightChildIndex]->SSN;
 
 							// Checks if the node's key is greater than any of the children's keys
-							if (heap[index]->SSN > (leftSSN > rightSSN ? rightSSN : leftSSN)) {
-								// Save the current node's data for a swap
-								U tempSSN = heap[index]->SSN;
-								U tempName = heap[index]->name;
+							if (heap[index]->SSN > leftSSN && leftSSN < rightSSN) {
+								// Swap their data
+								swap(heap[index], heap[leftChildIndex]);
 
-								if (heap[index]->SSN > leftSSN && leftSSN < rightSSN) {
-									// Swap their data
-									heap[index]->SSN = heap[leftChildIndex]->SSN;
-									heap[index]->name = heap[leftChildIndex]->name;
+								index = leftChildIndex; // Go to the left for the next loop
+							} else if (heap[index]->SSN > rightSSN && leftSSN > rightSSN) {
+								// Swap their data
+								swap(heap[index], heap[rightChildIndex]);
 
-									heap[leftChildIndex]->SSN = tempSSN;
-									heap[leftChildIndex]->name = tempName;
-
-									index = leftChildIndex; // Go to the left for the next loop
-								} else if (heap[index]->SSN > rightSSN && leftSSN > rightSSN) {
-									// Swap their data
-									heap[index]->SSN = heap[rightChildIndex]->SSN;
-									heap[index]->name = heap[rightChildIndex]->name;
-
-									heap[rightChildIndex]->SSN = tempSSN;
-									heap[rightChildIndex]->name = tempName;
-
-									index = rightChildIndex; // Go to the right for the next loop
-								}
-								// Move down a level
-								leftChildIndex = leftChild(index);
-								rightChildIndex = rightChild(index);
-							} else { // Cannot bubble-down any further
+								index = rightChildIndex; // Go to the right for the next loop
+							} else {
 								terminateLoop = true;
 							}
+
+							// Move down a level
+							leftChildIndex = leftChild(index);
+							rightChildIndex = rightChild(index);
 						}
 					}
 				}
